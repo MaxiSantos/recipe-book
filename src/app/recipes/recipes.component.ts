@@ -1,15 +1,12 @@
-import { Component, DoCheck } from '@angular/core';
-import {Recipe} from './recipe'
+import { Component } from '@angular/core';
+import { Recipe } from './recipe'
 
 @Component({
   selector: 'rb-recipes',
   templateUrl: './recipes.component.html'
 })
-export class RecipesComponent implements DoCheck {
+
+export class RecipesComponent {
   selectedLocalRecipe : Recipe;
   constructor() { }
-
-  ngDoCheck(){
-    console.log(this.selectedLocalRecipe)
-  }
 }
