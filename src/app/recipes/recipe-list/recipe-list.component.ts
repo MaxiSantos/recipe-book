@@ -1,4 +1,4 @@
-import { OnInit, Component, EventEmitter, Output } from '@angular/core';
+import { OnInit, Component } from '@angular/core';
 import { Recipe } from '../recipe';
 import { RecipeService } from '../recipe.service'
 
@@ -6,21 +6,18 @@ import { RecipeService } from '../recipe.service'
   selector: 'rb-recipe-list',
   templateUrl: './recipe-list.component.html'
 })
-export class RecipeListComponent implements OnInit {
+export class RecipeListComponent implements OnInit{
   recipes : Recipe[] = [];
 
-  @Output() recipeSelected = new EventEmitter<Recipe>();
+  // no longer needed since we'll let the router to handle
+  // this data
+  //@Output() recipeSelected = new EventEmitter<Recipe>();
 
   constructor(
     private recipeService: RecipeService) {
-
   }
 
   ngOnInit(){
     this.recipes = this.recipeService.getRecipes();
-  }
-
-  onSelected(recipe: Recipe){
-    this.recipeSelected.emit(recipe)
   }
 }

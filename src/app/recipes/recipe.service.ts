@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { Recipe } from './recipe';
 import { Ingredient } from '../shared';
 
-
-@Injectable()
 export class RecipeService {
   private recipes : Recipe[] = [
     new Recipe("Schnitzel", "Very tasty", "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat", "https://lotsglutenfree.files.wordpress.com/2016/06/goatscheese-and-salmon-pastries-1.jpg?w=128&h=128&crop=1", [
@@ -19,5 +17,13 @@ export class RecipeService {
 
   getRecipes(){
     return this.recipes;
+  }
+
+  getRecipe(id: number){
+    return this.recipes[id];
+  }
+
+  deleteRecipe(recipe: Recipe){
+    this.recipes.splice(this.recipes.indexOf(recipe), 1);
   }
 }
