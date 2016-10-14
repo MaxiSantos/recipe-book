@@ -1,10 +1,15 @@
 <!-- <a href="#"class="list-group-item clearfix"> -->
 <a [routerLink]="recipeId" href="#" class="list-group-item clearfix" routerLinkActive="active">
-  <div class="pull-left">
-    <h4 class="list-group-item-heading">{{recipeItem.name}}</h4>
-    <p class="list-group-item-text">{{recipeItem.shortDescription}}</p>
+  <div class="row">
+    <!-- <div class="pull-left"> -->
+    <div class="col-xs-8">
+      <h4 class="list-group-item-heading">{{recipeItem.name}}</h4>
+      <p class="list-group-item-text">{{recipeItem.shortDescription}}</p>
+    </div>
+    <!-- <span class="pull-right"> -->
+    <div class="col-xs-4">
+      <img src="{{recipeItem.imagePath}}" style="..." class="img-responsive">
+    <!-- </span> -->
+    </div>
   </div>
-  <span class="pull-right">
-    <img src="{{recipeItem.imagePath}}" style="..." class="img-responsive">
-  </span>
 </a>
