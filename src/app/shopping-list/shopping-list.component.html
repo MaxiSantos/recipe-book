@@ -1,10 +1,10 @@
 <div class="row">
   <div class="col-xs-10">
-    <rb-shopping-list-add></rb-shopping-list-add>
+    <rb-shopping-list-add [item]="selectedIngredient"></rb-shopping-list-add>
     <hr>
     <p>Ingredients</p>
     <ul class="list-group">
-      <a href="" class="list-group-item" style="..." *ngFor="let item of items"> {{item.name}} ({{item.amount}}) </a>
+      <a class="list-group-item" style="..." *ngFor="let item of items" (click)="onSelectItem(item)"> {{item.name}} ({{item.amount}})</a>
     </ul>
   </div>
 </div>
