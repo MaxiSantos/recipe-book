@@ -27,4 +27,12 @@ export class ShoppingListService {
     this.items.splice(this.items.indexOf(item), 1);
   }
 
+  deleteAll(){
+    this.items = [];
+    this.items.push({
+      name: 'asdsad',
+      amount: 10
+    })
+  }
+
 }

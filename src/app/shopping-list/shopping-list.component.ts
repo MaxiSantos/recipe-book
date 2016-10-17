@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Ingredient } from '../shared';
 import { ShoppingListService } from './shopping-list.service';
 
@@ -23,6 +23,11 @@ export class ShoppingListComponent implements OnInit {
 
   onCleared() {
     this.selectedIngredient = null;
+    console.log('this.selectedItem: '+this.selectedIngredient);
+  }
+
+  onClearAll() {
+    this.sls.deleteAll();
   }
 
 }

@@ -72,7 +72,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
             name: new FormControl(this.recipe.ingredients[i].name, Validators.required),
             amount: new FormControl(this.recipe.ingredients[i].amount, [
               Validators.required,
-              Validators.pattern('\\d')
+              Validators.pattern('^\\d+$')
             ])
           })
         );
@@ -117,12 +117,10 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         name: new FormControl(name.trim(), Validators.required),
         amount: new FormControl(amount.trim(), [ // don't need to cast amount to +amount cause it has the built in validation
           Validators.required,
-          Validators.pattern('\\d')])
+          Validators.pattern('^\\d+$')])
       })
     );
   }
-
-
 
   private navigateBack() {
     this.router.navigate(['../']); // navigating up one step
