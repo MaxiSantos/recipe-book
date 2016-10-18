@@ -1,5 +1,5 @@
 import { ViewChild, Component, OnChanges, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Ingredient } from '../shared/ingredient';
+import { Ingredient, MyTypes } from '../shared';
 import { ShoppingListService } from './shopping-list.service';
 import { FormGroup, NgForm } from '@angular/forms';
 
@@ -18,22 +18,24 @@ export class ShoppingListAddComponent implements OnChanges, OnInit {
 
   ngOnChanges(changes) {
     this.isAdding = changes.item.currentValue === null;
-    this.isAdding ? this.item = {name: null, amount: null} : '';
-    console.log('on changes');
+    this.isAdding ? this.item = new Ingredient(null, null, MyTypes.NONE) : '';
   }
 
   ngOnInit(){
     console.log(this.item);
   }
 
-  //onSubmit(ingredient: Ingredient){
-  //onSubmit(form: FormGroup){
   onSubmit(form: NgForm){
-    //const newIngredient = new Ingredient(form.ingredient.name, ingredient.amount);
-    const newIngredient = new Ingredient(form.controls['name'].value, form.controls['amount'].value);
-    //const newIngredient = new Ingredient(null, null);
+    let newIngredient,
+      measurementUnit = form.controls['measurementUnit'].value,
+      isUncontable = measurementUnit !== '';
+    if (isUncontable) {
+      newIngredient = new Ingredient(form.controls['name'].value, form.controls['amount'].value, MyTypes.UNCONTABLE, measurementUnit);
+    } else {
+      newIngredient = new Ingredient(form.controls['name'].value, form.controls['amount'].value, MyTypes.CONTABLE);
+    }
 
-    if(this.isAdding) {
+    if (this.isAdding) {
       this.item = newIngredient;
       this.sls.addItem(this.item);
       this.onClear();
@@ -41,16 +43,9 @@ export class ShoppingListAddComponent implements OnChanges, OnInit {
       this.sls.editItem(this.item, newIngredient)
       this.onClear();
     }
-    //this.form.reset();
     setTimeout(() => {
       this.form.reset()
     });
-
-    //this.form.reset({name: null, ammount: null});
-
-    console.log('on submiting');
-
-    //form.resetForm()
   }
 
   onDelete() {
@@ -58,21 +53,13 @@ export class ShoppingListAddComponent implements OnChanges, OnInit {
     this.onClear();
   }
 
-  commonClear() {
-    this.isAdding = true;
-    // this allow us to clear the shoping list when the user just write content
-    //this.item = new Ingredient(null, null);
-
-  }
-
   onClear() {
-    this.commonClear();
+    this.isAdding = true;
     this.cleared.emit(null);
   }
 
   onClearAll(){
-    this.commonClear();
+    this.isAdding = true;
     this.clearedAll.emit(null);
   }
-
 }

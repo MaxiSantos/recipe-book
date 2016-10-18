@@ -28,11 +28,10 @@ export class ShoppingListService {
   }
 
   deleteAll(){
-    this.items = [];
-    this.items.push({
-      name: 'asdsad',
-      amount: 10
-    })
+    // if assigning this.items = [] we are creating a new array but this not update other places where
+    // this.item was binded
+    this.items.splice(0);
+
   }
 
 }

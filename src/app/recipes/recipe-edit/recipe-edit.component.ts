@@ -15,6 +15,7 @@ from '@angular/forms';
 
 import { Recipe } from '../recipe';
 import { RecipeService } from '../recipe.service';
+import { MyTypes } from '../../shared';
 
 @Component({
   selector: 'rb-recipe-edit',
@@ -55,17 +56,14 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   }
 
   initForm() {
-    let recipeName = '';
-    let recipeImageUrl = ''
-    let recipeLongContent = '';
+    let recipeName         = '';
+    let recipeImageUrl     = ''
+    let recipeLongContent  = '';
     let recipeShortContent = '';
-    let recipeIngredients: FormArray = new FormArray([]);
+    let recipeIngredients : FormArray = new FormArray([]);
 
     let isEditing = !this.isNew;
     if(isEditing) {
-
-      // if saving a recipe with no ingredients then when saving on firebase it will be saved with no ingredients property
-      // so in this loop the app breaks;
       for (var i = 0; i < this.recipe.ingredients.length; ++i) {
         recipeIngredients.push(
           new FormGroup({
@@ -73,14 +71,15 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
             amount: new FormControl(this.recipe.ingredients[i].amount, [
               Validators.required,
               Validators.pattern('^\\d+$')
-            ])
+            ]),
+            measurementUnit: new FormControl(this.recipe.ingredients[i].measurementUnit),
+            type: new FormControl(this.recipe.ingredients[i].type),
           })
         );
       }
-
-      recipeName     = this.recipe.name;
-      recipeImageUrl = this.recipe.imagePath;
-      recipeShortContent  = this.recipe.shortDescription
+      recipeName         = this.recipe.name;
+      recipeImageUrl     = this.recipe.imagePath;
+      recipeShortContent = this.recipe.shortDescription;
       recipeLongContent  = this.recipe.longDescription;
     }
 
@@ -103,6 +102,18 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     this.navigateBack();
   }
 
+  onUnitChange(index){
+    let measurementUnit = this.recipeForm.controls['ingredients']['controls'][index].controls.measurementUnit.value;
+    let typeFormControl = (<FormControl>this.recipeForm.controls['ingredients']['controls'][index].controls['type']);
+    let measurementUnitFormControl = (<FormControl>this.recipeForm.controls['ingredients']['controls'][index].controls['measurementUnit']);
+    if (measurementUnit == "" || measurementUnit.toLowerCase().trim() == "unit") {
+      typeFormControl.setValue(MyTypes.CONTABLE);
+      measurementUnitFormControl.setValue("unit");
+    } else {
+      typeFormControl.setValue(MyTypes.UNCONTABLE);
+    }
+  }
+
   onCancel() {
     this.navigateBack();
   }
@@ -111,15 +122,22 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     (<FormArray>this.recipeForm.controls['ingredients']).removeAt(index);
   }
 
-  onAddItem(name: string, amount: string) {
-    (<FormArray>this.recipeForm.controls['ingredients']).push(
-      new FormGroup({
-        name: new FormControl(name.trim(), Validators.required),
-        amount: new FormControl(amount.trim(), [ // don't need to cast amount to +amount cause it has the built in validation
-          Validators.required,
-          Validators.pattern('^\\d+$')])
-      })
-    );
+  onAddItem(name: string, amount: string, measurementUnit: string) {
+    const isUncontable = measurementUnit.trim() != "";
+    let myFormGroup = new FormGroup({
+      name: new FormControl(name.trim(), Validators.required),
+      amount: new FormControl(amount.trim(), [ // don't need to cast amount to +amount cause it has the built in validation
+        Validators.required,
+        Validators.pattern('^\\d+$')
+      ]),
+      type: new FormControl(isUncontable ? MyTypes.UNCONTABLE : MyTypes.CONTABLE)
+    })
+    if (isUncontable) {
+      myFormGroup.controls['measurementUnit'] = new FormControl(measurementUnit);
+    } else {
+      myFormGroup.controls['measurementUnit'] = new FormControl('unit');
+    }
+    (<FormArray>this.recipeForm.controls['ingredients']).push(myFormGroup);
   }
 
   private navigateBack() {
