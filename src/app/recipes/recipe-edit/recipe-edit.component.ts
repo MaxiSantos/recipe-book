@@ -2,6 +2,7 @@ import {
   Component,
   OnInit,
   OnDestroy,
+  ViewChild
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
@@ -27,6 +28,10 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   private recipe: Recipe; // this is the recipe we are working on
   private subscription: Subscription;
   private isNew: boolean = true;
+
+  @ViewChild('itemName') newIngredientName;
+  @ViewChild('itemAmount') newIngredientItemAmount;
+  @ViewChild('itemMeasureUnit') newIngredientMeasureUnit;
 
   constructor(
     private route: ActivatedRoute,
@@ -138,6 +143,14 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       myFormGroup.controls['measurementUnit'] = new FormControl('unit');
     }
     (<FormArray>this.recipeForm.controls['ingredients']).push(myFormGroup);
+
+    //
+    //  TODO, check how to clean these fields
+    //
+
+    this.newIngredientName = "";
+    this.newIngredientItemAmount = "";
+    this.newIngredientMeasureUnit = "";
   }
 
   private navigateBack() {

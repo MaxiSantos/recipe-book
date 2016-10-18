@@ -23,7 +23,6 @@ export class ShoppingListComponent implements OnInit {
 
   onCleared() {
     this.selectedIngredient = null;
-    console.log('this.selectedItem: '+this.selectedIngredient);
   }
 
   onClearAll() {
