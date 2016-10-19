@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { routing } from './app.routing';
 
-
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header.component';
 import { RecipesComponent } from './recipes/recipes.component';
@@ -18,6 +17,10 @@ import { ShoppingListService } from './shopping-list/shopping-list.service';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipeStartComponent } from './recipes/recipe-start.component';
 import { GroupPipe } from './group.pipe';
+import { FavouriteListComponent } from './favourite-list/favourite-list.component';
+import { FavouriteItemComponent } from './favourite-list/favourite-item.component';
+import { FavouriteRecipeService } from './favourite-list';
+import { RecipeService } from './recipes/recipe.service';
 
 @NgModule({
   declarations: [
@@ -32,16 +35,18 @@ import { GroupPipe } from './group.pipe';
     DropdownDirective,
     RecipeEditComponent,
     RecipeStartComponent,
-    GroupPipe
+    GroupPipe,
+    FavouriteListComponent,
+    FavouriteItemComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-     HttpModule,
+    HttpModule,
     routing
   ],
-  providers: [ShoppingListService],
+  providers: [ShoppingListService, FavouriteRecipeService, RecipeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
