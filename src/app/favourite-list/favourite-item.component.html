@@ -3,7 +3,12 @@
   <!-- RECIPE ITEM -->
   <div class="col-xs-7">
     <span class="pull-left">
-      <h4 class="list-group-item-heading"> {{item.name}} </h4>
+      <button type="button" class="btn btn-xs btn-success" (click)="onEdit()">
+        <span class="glyphicon glyphicon-pencil"></span>
+      </button>
+      <a [routerLink]="recipeId/edit">
+        <h4 class="list-group-item-heading"> {{item.name}} </h4>
+      </a>
     </span>
     <div class="pull-right">
       <img [src]="item.imagePath" style="max-height: 50px" class="img-responsive" />
@@ -11,19 +16,22 @@
   </div>
 
   <!-- STARS -->
-  <div class="col-xs-2">
-    <div><span class="glyphicon glyphicon-star"></span> {{item.rating}}</div>
+  <div class="col-xs-1">
+    <div>{{item.rating}}</div>
   </div>
 
   <!-- MANAGE -->
-  <div class="col-xs-3">
+  <div class="col-xs-4">
     <div>
       <div class="btn-group" role="group" aria-label="...">
-        <button type="button" class="btn btn-xs btn-success">
-          <span class="glyphicon glyphicon-pencil"></span> Edit
+        <button type="button" class="btn btn-xs btn-success" (click)="onSave()">
+          <span class="glyphicon glyphicon-save"></span>
         </button>
-        <button type="button" class="btn btn-xs btn-primary">
-          <span class="glyphicon glyphicon-plus"></span> Add <span class="glyphicon glyphicon-star"></span>
+        <button type="button" class="btn btn-xs btn-primary" (click)="onAddingRating()">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+        <button type="button" class="btn btn-xs btn-danger" (click)="onDecreasingRating()">
+          <span class="glyphicon glyphicon-minus"></span>
         </button>
       </div>
     </div>

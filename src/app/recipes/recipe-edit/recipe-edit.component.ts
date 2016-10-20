@@ -49,7 +49,16 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
           this.recipe = null;
         } else {
           this.recipeIndex = +params['id'] //adding + to cast it to number
-          this.recipe = this.recipeService.getRecipe(this.recipeIndex);
+
+          if(!!this.recipeService.getRecipes()) {
+            this.recipe = this.recipeService.getRecipe(this.recipeIndex);
+          } else {
+            this.recipeService.recipesChanges.subscribe(
+              (data: Recipe[]) => {
+                this.recipe = this.recipeService.getRecipe(this.recipeIndex);
+              }
+            )
+          }
         }
       }
     );
@@ -62,14 +71,15 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   initForm() {
     let recipeName         = '';
-    let recipeImageUrl     = ''
+    let recipeImageUrl     = ''; // default image
     let recipeLongContent  = '';
     let recipeShortContent = '';
+    let recipeRating       = 0;
     let recipeIngredients : FormArray = new FormArray([]);
 
     let isEditing = !this.isNew;
-    let areIngredients = !!this.recipe.ingredients;
-    if(isEditing) {
+    if (isEditing) {
+      let areIngredients = !!this.recipe.ingredients;
       if(areIngredients) {
         for (var i = 0; i < this.recipe.ingredients.length; ++i) {
           recipeIngredients.push(
@@ -90,15 +100,17 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       recipeImageUrl     = this.recipe.imagePath;
       recipeShortContent = this.recipe.shortDescription;
       recipeLongContent  = this.recipe.longDescription;
+      recipeRating       = this.recipe.rating;
     }
 
     this.recipeForm = this.formBuilder.group({
-      name: [recipeName, Validators.required],
-      imagePath: [recipeImageUrl, Validators.required],
-      shortDescription : [recipeShortContent, Validators.required],
+      name            : [recipeName, Validators.required],
+      imagePath       : [recipeImageUrl, Validators.required],
+      shortDescription: [recipeShortContent, Validators.required],
       longDescription : [recipeLongContent, Validators.required],
-      ingredients : recipeIngredients
-    })
+      rating          : [recipeRating],
+      ingredients     : recipeIngredients
+    });
   }
 
   onSubmit() {

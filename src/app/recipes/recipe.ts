@@ -7,6 +7,5 @@ export class Recipe {
     public imagePath: string,
     public ingredients: Ingredient[],
     public rating: number
-    ){}
+  ){}
 }
-

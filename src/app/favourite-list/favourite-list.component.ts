@@ -23,7 +23,7 @@ export class FavouriteListComponent implements OnInit, OnDestroy {
         this.recipes = this.frs.getRecipes(recipes);
       }
     );
-    this.rs.fetchData()
+    this.rs.fetchData();
   }
 
   ngOnDestroy() {
