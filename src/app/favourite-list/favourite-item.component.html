@@ -6,7 +6,8 @@
       <button type="button" class="btn btn-xs btn-success" (click)="onEdit()">
         <span class="glyphicon glyphicon-pencil"></span>
       </button>
-      <a [routerLink]="recipeId/edit">
+      <a [routerLink]="[itemIndex,'edit']">
+      <!-- <a [routerLink]="['edit']"> -->
         <h4 class="list-group-item-heading"> {{item.name}} </h4>
       </a>
     </span>

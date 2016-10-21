@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-5">
     <h1>List of top 10 recipes of the user or month</h1>
-    <rb-favourite-item *ngFor="let recipe of recipes" [item]="recipe"></rb-favourite-item>
+    <rb-favourite-item *ngFor="let recipe of recipes; let i=index" [item]="recipe" [itemIndex]=i></rb-favourite-item>
   </div>
   <div class="col-md-7">
     <h1>Content that will change according to the route on the favourite</h1>

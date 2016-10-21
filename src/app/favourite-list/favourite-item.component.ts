@@ -13,6 +13,8 @@ import { RecipeService } from '../recipes';
 })
 export class FavouriteItemComponent implements OnInit {
   @Input() item: Recipe;
+  @Input() itemIndex: number;
+
   constructor(public rs: RecipeService) { }
 
   ngOnInit() {

@@ -52,10 +52,12 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
           if(!!this.recipeService.getRecipes()) {
             this.recipe = this.recipeService.getRecipe(this.recipeIndex);
+            this.initForm();
           } else {
             this.recipeService.recipesChanges.subscribe(
               (data: Recipe[]) => {
                 this.recipe = this.recipeService.getRecipe(this.recipeIndex);
+                this.initForm();
               }
             )
           }
@@ -78,7 +80,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     let recipeIngredients : FormArray = new FormArray([]);
 
     let isEditing = !this.isNew;
-    if (isEditing) {
+    if (isEditing && !!this.recipe) {
       let areIngredients = !!this.recipe.ingredients;
       if(areIngredients) {
         for (var i = 0; i < this.recipe.ingredients.length; ++i) {
