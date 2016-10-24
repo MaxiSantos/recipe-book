@@ -27,6 +27,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   private recipeIndex: number;
   private recipe: Recipe; // this is the recipe we are working on
   private subscription: Subscription;
+  private recipesChanges: Subscription;
+  private recipesChangesForm: Subscription;
   private isNew: boolean = true;
 
   @ViewChild('itemName') newIngredientName;
@@ -54,10 +56,11 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
             this.recipe = this.recipeService.getRecipe(this.recipeIndex);
             this.initForm();
           } else {
-            this.recipeService.recipesChanges.subscribe(
+            this.recipesChangesForm = this.recipeService.recipesChanges.subscribe(
               (data: Recipe[]) => {
                 this.recipe = this.recipeService.getRecipe(this.recipeIndex);
                 this.initForm();
+                this.recipesChangesForm.unsubscribe();
               }
             )
           }
@@ -69,6 +72,10 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.subscription.unsubscribe();
+    if(!!this.recipesChanges) {
+      this.recipesChanges.unsubscribe();
+    }
+
   }
 
   initForm() {
@@ -122,7 +129,11 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     } else {
       this.recipeService.editRecipe(this.recipe, newRecipe);
     }
-    this.navigateBack();
+    this.recipesChanges = this.recipeService.recipesChanges.subscribe((data:any) => {
+      this.navigateBack();
+    });
+
+    //this.navigateBack();
   }
 
   onUnitChange(index){
@@ -173,5 +184,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   private navigateBack() {
     this.router.navigate(['../']); // navigating up one step
+    // setTimeout(()=>{
+    //   this.router.navigate(['../']); // navigating up one step
+    // }, 1000)
   }
 }

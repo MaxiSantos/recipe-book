@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Recipe } from '../recipes/recipe';
+import { FavouriteRecipe } from '../recipes/recipe';
 import { RecipeService } from '../recipes/recipe.service';
 
 @Injectable()
 export class FavouriteRecipeService {
-  private recipes: Recipe[];
+  private recipes: FavouriteRecipe[];
 
   constructor(public rs: RecipeService) { }
 
@@ -13,10 +13,11 @@ export class FavouriteRecipeService {
   //
   // PRO: it keeps updated the highest recipes details
   getRecipes(recipes) {
-    var highestRated = this.getHighestRatedIndex(recipes, 2);
+    var highestRatedIndex = this.getHighestRatedIndex(recipes, 2);
     this.recipes = [];
-    for (var i = 0; i < highestRated.length; i++) {
-      this.recipes.push(recipes[highestRated[i]]);
+    for (var i = 0; i < highestRatedIndex.length; i++) {
+      this.recipes.push(recipes[highestRatedIndex[i]]);
+      this.recipes[this.recipes.length-1].position = highestRatedIndex[i];
     }
     return this.recipes;
   }

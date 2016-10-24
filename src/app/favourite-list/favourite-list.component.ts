@@ -1,7 +1,7 @@
 import { OnDestroy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FavouriteRecipeService } from './';
 import { RecipeService } from '../recipes/recipe.service';
-import { Recipe } from '../recipes/recipe';
+import { Recipe, FavouriteRecipe } from '../recipes/recipe';
 
 import { Subscription } from 'rxjs/Rx';
 
@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs/Rx';
   templateUrl: './favourite-list.component.html'
 })
 export class FavouriteListComponent implements OnInit, OnDestroy {
-  private recipes: Recipe[];
+  private recipes: FavouriteRecipe[];
   private subscription: Subscription;
   constructor(
     public frs: FavouriteRecipeService,
@@ -27,7 +27,7 @@ export class FavouriteListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    //this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
 }

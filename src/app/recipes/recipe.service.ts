@@ -24,14 +24,20 @@ export class RecipeService {
     this.recipes.splice(this.recipes.indexOf(recipe), 1);
   }
 
-  addRecipe(recipe: Recipe) {
+  addRecipe(recipe: Recipe, cb?) {
     this.recipes.push(recipe);
-    this.storeData().subscribe();
+    this.storeData().subscribe(
+      (data:any) => {
+        this.recipesChanges.emit(this.recipes);
+      });
   }
 
-  editRecipe(oldRecipe: Recipe, newRecipe: Recipe) {
+  editRecipe(oldRecipe: Recipe, newRecipe: Recipe, cb?) {
     this.recipes[this.recipes.indexOf(oldRecipe)] = newRecipe;
-    this.storeData().subscribe();
+    this.storeData().subscribe(
+      (data:any) => {
+        this.recipesChanges.emit(this.recipes);
+      });
   }
 
   storeData() {
@@ -40,8 +46,9 @@ export class RecipeService {
       'Content-Type': 'application/json'
     })
     return this.http.put('https://recipe-book-817c6.firebaseio.com/recipes.json', body, {
-      headers: headers
-    })
+        headers: headers
+      })
+      .map((response: Response) => response.json())
   }
 
   fetchData() {

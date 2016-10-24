@@ -9,3 +9,23 @@ export class Recipe {
     public rating: number
   ){}
 }
+
+export class FavouriteRecipe extends Recipe{
+  //constructor(name: string) { super(name); }
+  constructor(name,
+    shortDescription,
+    longDescription,
+    imagePath,
+    ingredients,
+    rating,
+    public position: number){
+    super(
+      name,
+      shortDescription,
+      longDescription,
+      imagePath,
+      ingredients,
+      rating
+    )
+  }
+}

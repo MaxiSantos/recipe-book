@@ -1,10 +1,10 @@
 <div class="row">
-  <div class="col-md-5">
-    <h1>List of top 10 recipes of the user or month</h1>
-    <rb-favourite-item *ngFor="let recipe of recipes; let i=index" [item]="recipe" [itemIndex]=i></rb-favourite-item>
+  <div class="col-md-6">
+    <h3>List of top 10 recipes of the user or month</h3>
+    <rb-favourite-item *ngFor="let recipe of recipes; let i=index" [item]="recipe" [itemIndex]=recipe.position></rb-favourite-item>
   </div>
-  <div class="col-md-7">
-    <h1>Content that will change according to the route on the favourite</h1>
+  <div class="col-md-6">
+    <h3>Content that will change according to the route on the favourite</h3>
     <router-outlet></router-outlet>
   </div>
 </div>
