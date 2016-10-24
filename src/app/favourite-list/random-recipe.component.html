@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-sm-12">
+    {{randomRecipe?.name}}
+    <div class="row">
+      <div class="col-xs-8 col-sm-6">
+        {{randomRecipe?.shortDescription}}
+      </div>
+      <div class="col-xs-4 col-sm-6">
+        <img [src]="randomRecipe?.imagePath" alt="..." class="img-circle img-responsive">
+      </div>
+    </div>
+  </div>
+</div>

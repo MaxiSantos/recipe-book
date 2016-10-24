@@ -21,6 +21,7 @@ import { FavouriteListComponent } from './favourite-list/favourite-list.componen
 import { FavouriteItemComponent } from './favourite-list/favourite-item.component';
 import { FavouriteRecipeService } from './favourite-list';
 import { RecipeService } from './recipes/recipe.service';
+import { RandomRecipeComponent } from './favourite-list/random-recipe.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { RecipeService } from './recipes/recipe.service';
     RecipeStartComponent,
     GroupPipe,
     FavouriteListComponent,
-    FavouriteItemComponent
+    FavouriteItemComponent,
+    RandomRecipeComponent
   ],
   imports: [
     BrowserModule,
