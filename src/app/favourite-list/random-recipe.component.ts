@@ -20,20 +20,28 @@ export class RandomRecipeComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    var allRecipes = this.rs.getRecipes();
-    if (!!allRecipes) {
+    console.log("calling this.rs.getRecipes from random-recipe.component.ts")
+    this.rs.getRecipes().subscribe((recipes: Recipe[]) => {
       var min = 0,
-        max = allRecipes.length - 1,
+        max = recipes.length - 1,
         random = Math.floor(Math.random() * (max - min + 1)) + min;
-      this.randomRecipe = allRecipes[random];
-    } else {
-      var subscription = this.rs.recipesChanges.subscribe((recipes: Recipe[]) => {
-        var min = 0,
-          max = recipes.length - 1,
-          random = Math.floor(Math.random() * (max - min + 1)) + min;
-        this.randomRecipe = recipes[random];
-      })
-    }
-  }
+      this.randomRecipe = recipes[random];
+    })
 
+
+    // if (!!allRecipes) {
+    //   var min = 0,
+    //     max = allRecipes.length - 1,
+    //     random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //   this.randomRecipe = allRecipes[random];
+    // } else {
+    //   var subscription = this.rs.recipesChanges.subscribe((recipes: Recipe[]) => {
+    //     var min = 0,
+    //       max = recipes.length - 1,
+    //       random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //     this.randomRecipe = recipes[random];
+    //   })
+    // }
+
+  }
 }

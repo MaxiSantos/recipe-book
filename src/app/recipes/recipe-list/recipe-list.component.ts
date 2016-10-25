@@ -13,16 +13,16 @@ export class RecipeListComponent implements OnInit, OnDestroy{
   private subscription : Subscription;
 
   constructor(
-    private recipeService: RecipeService) {
+    private rs: RecipeService) {
   }
 
   ngOnInit(){
-    this.subscription = this.recipeService.recipesChanges.subscribe(
+    this.subscription = this.rs.getRecipes().subscribe(
       (recipes: Recipe[]) => {
         this.recipes = recipes;
       }
     );
-    this.recipeService.fetchData()
+    //this.recipeService.fetchData()
   }
 
   ngOnDestroy(){
