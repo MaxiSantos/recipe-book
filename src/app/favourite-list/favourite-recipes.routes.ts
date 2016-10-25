@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { RecipeEditComponent } from '../recipes';
 
-import { FavouriteListComponent, RandomRecipeComponent } from './';
+import { RandomRecipeComponent } from './random-recipe.component';
 
 export const FAVOURITE_RECIPE_ROUTES : Routes = [
   { path: '', redirectTo: 'overview', pathMatch: 'full' },

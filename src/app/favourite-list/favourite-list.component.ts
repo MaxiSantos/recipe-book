@@ -1,8 +1,7 @@
 import { OnDestroy, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FavouriteRecipeService } from './';
-import { RecipeService } from '../recipes/recipe.service';
-import { Recipe, FavouriteRecipe } from '../recipes/recipe';
+import { FavouriteRecipeService } from './favourite-recipe.service';
 
+import { FavouriteRecipe, RecipeService, Recipe } from '../recipes';
 import { Subscription } from 'rxjs/Rx';
 
 @Component({

@@ -1,9 +1,9 @@
 import { Routes, RouterModule } from '@angular/router';
-import { RecipesComponent } from './recipes';
-import { ShoppingListComponent } from './shopping-list/shopping-list.component';
+import { RecipesComponent } from './recipes/recipes.component';
+import { ShoppingListComponent } from './shopping-list';
+import { RECIPE_ROUTES } from './recipes/recipes.routes';
+import { FAVOURITE_RECIPE_ROUTES } from './favourite-list/favourite-recipes.routes';
 import { FavouriteListComponent } from './favourite-list/favourite-list.component';
-import { RECIPE_ROUTES } from './recipes';
-import { FAVOURITE_RECIPE_ROUTES } from './favourite-list';
 
 const APP_ROUTES: Routes = [
   { path: '', redirectTo: '/recipes', pathMatch : 'full'},
