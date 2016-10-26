@@ -22,6 +22,7 @@ import { FavouriteItemComponent } from './favourite-list/favourite-item.componen
 import { FavouriteRecipeService } from './favourite-list';
 import { RecipeService } from './recipes/recipe.service';
 import { RandomRecipeComponent } from './favourite-list/random-recipe.component';
+import { ApiService } from './api.service';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,7 @@ import { RandomRecipeComponent } from './favourite-list/random-recipe.component'
     HttpModule,
     routing
   ],
-  providers: [ShoppingListService, FavouriteRecipeService, RecipeService],
+  providers: [ShoppingListService, FavouriteRecipeService, RecipeService, ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,18 +1,32 @@
 import { Injectable } from '@angular/core';
+
 import { FavouriteRecipe } from '../recipes/recipe';
 import { RecipeService } from '../recipes/recipe.service';
+import { ApiService } from '.././api.service';
 
 @Injectable()
 export class FavouriteRecipeService {
-  private recipes: FavouriteRecipe[];
+  public recipes: FavouriteRecipe[];
 
-  constructor(public rs: RecipeService) { }
+  constructor(
+    public api: ApiService
+  ) { }
 
   // TODO, always calculating highest values
   // it sohuld initialize the array in a reparate method.
   //
   // PRO: it keeps updated the highest recipes details
   getRecipes(recipes) {
+    var highestRatedIndex = this.getHighestRatedIndex(recipes, 2);
+    this.recipes = [];
+    for (var i = 0; i < highestRatedIndex.length; i++) {
+      this.recipes.push(recipes[highestRatedIndex[i]]);
+      this.recipes[this.recipes.length-1].position = highestRatedIndex[i];
+    }
+    return this.recipes;
+  }
+
+  public mapRecipesDEPRECATED(recipes) {
     var highestRatedIndex = this.getHighestRatedIndex(recipes, 2);
     this.recipes = [];
     for (var i = 0; i < highestRatedIndex.length; i++) {

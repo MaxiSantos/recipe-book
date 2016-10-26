@@ -21,19 +21,11 @@ export class FavouriteListComponent implements OnInit, OnDestroy {
     // also showing that data then we need to subscribe to
     // those changes
 
-    // this.subscription = this.rs.recipesChanges.subscribe(
-    //   (recipes: Recipe[]) => {
-    //     this.recipes = this.frs.getRecipes(recipes);
-    //   }
-    // );
-
-    console.log("calling this.rs.getRecipes from favourite-list.component.ts")
     this.rs.getRecipes().subscribe(
       (recipes: Recipe[]) => {
         this.recipes = this.frs.getRecipes(recipes);
       }
     );
-    //this.rs.fetchData();
   }
 
   ngOnDestroy() {
