@@ -3,6 +3,13 @@ import { Observable } from 'rxjs/Observable';
 import { Headers, Http, Response } from '@angular/http';
 import 'rxjs/Rx';
 
+import { IApiConfig } from './i-api-config';
+
+// TODO - ISSUE
+// can't save a state because it's singleton
+// need a way to figure it out how to translate this to a
+// non-singleton service
+
 @Injectable()
 export class ApiService {
   //private observable: Observable<any>;
@@ -14,24 +21,24 @@ export class ApiService {
     private http: Http
   ) { }
 
-  getData(url, service, dataKey, map?) {
-    console.log(this.cont++ + " url: "+url);
-    if(!!service[dataKey]) {
+  //getData(url, service, dataKey, map?) {
+  getData(config: IApiConfig) {
+    console.log(this.cont++ + " url: "+config.url);
+    if(!!config.service[config.dataKey]) {
       // if `data` is available just return it as `Observable`
-      return Observable.of(service[dataKey]);
-    } else if (service.observable) {
+      return Observable.of(config.service[config.dataKey]);
+    } else if (config.service.observable) {
       // if `this.observable` is set then the request is in progress
       // return the `Observable` for the ongoing request
-      return service.observable;
+      return config.service.observable;
     } else {
       // create the request, store the `Observable` for subsequent subscribers
-      service.observable = this._fetchData(url, service, dataKey);
-      return service.observable;
+      config.service.observable = this._fetchData(config.url, config.service, config.dataKey);
+      return config.service.observable;
     }
   }
 
   _fetchData(url, service, dataKey, map?) {
-    console.log('_fetchData');
     return this.http.get(url)
       .map(response => {
         service.observable = null;

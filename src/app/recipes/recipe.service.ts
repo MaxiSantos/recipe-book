@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable, Inject, EventEmitter } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
@@ -6,9 +6,11 @@ import 'rxjs/Rx';
 import { Recipe } from './recipe';
 import { Ingredient, MyTypes } from '../shared';
 import { ApiService } from '../api.service';
+import { IApiConfig } from '../i-api-config';
+import { IApiService } from '../i-api-service';
 
 @Injectable()
-export class RecipeService {
+export class RecipeService extends IApiService{
   recipesChanges = new EventEmitter<Recipe[]>();
 
   // TODO, create a sessionCacheTimeout and state
@@ -19,7 +21,7 @@ export class RecipeService {
 
   constructor(
     private http: Http,
-    private api: ApiService
+    public api: ApiService
   ) { }
 
   getRecipes(): Observable<Recipe[]>{
@@ -49,7 +51,9 @@ export class RecipeService {
 
   getRecipes2(): Observable<Recipe[]> {
     let url = 'https://recipe-book-817c6.firebaseio.com/recipes.json';
-    return this.api.getData(url, this, 'recipes');
+    let config = new IApiConfig(url, this, 'recipes');
+    //return this.api.getData(url, this, 'recipes');
+    return this.api.getData(config);
   }
 
   getRecipe(id: number){
@@ -88,7 +92,6 @@ export class RecipeService {
   }
 
   _fetchData() {
-    console.log("_fetchData")
     return this.http.get('https://recipe-book-817c6.firebaseio.com/recipes.json')
       .map(response =>  {
         // when the cached data is available we don't need the `Observable` reference anymore
@@ -107,7 +110,6 @@ export class RecipeService {
 
 
   fetchData() {
-    console.log("fetchData")
     return this.http.get('https://recipe-book-817c6.firebaseio.com/recipes.json')
       .map((response: Response) => response.json())
       .subscribe(

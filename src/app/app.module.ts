@@ -23,6 +23,8 @@ import { FavouriteRecipeService } from './favourite-list';
 import { RecipeService } from './recipes/recipe.service';
 import { RandomRecipeComponent } from './favourite-list/random-recipe.component';
 import { ApiService } from './api.service';
+import { CheefComponent } from './cheef/cheef.component';
+import { CheefService } from './cheef/cheef.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { ApiService } from './api.service';
     GroupPipe,
     FavouriteListComponent,
     FavouriteItemComponent,
-    RandomRecipeComponent
+    RandomRecipeComponent,
+    CheefComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +52,7 @@ import { ApiService } from './api.service';
     HttpModule,
     routing
   ],
-  providers: [ShoppingListService, FavouriteRecipeService, RecipeService, ApiService],
+  providers: [ShoppingListService, FavouriteRecipeService, RecipeService, CheefService, ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

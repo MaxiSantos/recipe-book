@@ -1,10 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Ingredient } from '../shared';
 import { ShoppingListService } from './shopping-list.service';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'rb-shopping-list',
-  templateUrl: './shopping-list.component.html'
+  templateUrl: './shopping-list.component.html',
+  providers: [ ApiService ]
 })
 export class ShoppingListComponent implements OnInit {
   items: Ingredient[];

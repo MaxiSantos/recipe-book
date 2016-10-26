@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { RecipeService } from './recipes/recipe.service';
+
+import { ApiService } from './api.service';
 
 @Component({
   selector: 'rb-root',

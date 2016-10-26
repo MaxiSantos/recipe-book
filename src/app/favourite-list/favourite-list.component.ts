@@ -1,12 +1,14 @@
 import { OnDestroy, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FavouriteRecipeService } from './favourite-recipe.service';
-
-import { FavouriteRecipe, RecipeService, Recipe } from '../recipes';
 import { Subscription } from 'rxjs/Rx';
+
+import { FavouriteRecipeService } from './favourite-recipe.service';
+import { FavouriteRecipe, RecipeService, Recipe } from '../recipes';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'rb-favourite-list',
-  templateUrl: './favourite-list.component.html'
+  templateUrl: './favourite-list.component.html',
+  providers: [ ApiService ]
 })
 export class FavouriteListComponent implements OnInit, OnDestroy {
   private recipes: FavouriteRecipe[];

@@ -1,11 +1,14 @@
 import { ViewChild, Component, OnChanges, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup, NgForm } from '@angular/forms';
+
 import { Ingredient, MyTypes } from '../shared';
 import { ShoppingListService } from './shopping-list.service';
-import { FormGroup, NgForm } from '@angular/forms';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'rb-shopping-list-add',
-  templateUrl: './shopping-list-add.component.html'
+  templateUrl: './shopping-list-add.component.html',
+  providers: [ ApiService ]
 })
 export class ShoppingListAddComponent implements OnChanges, OnInit {
   isAdding = true;
@@ -22,7 +25,6 @@ export class ShoppingListAddComponent implements OnChanges, OnInit {
   }
 
   ngOnInit(){
-    console.log(this.item);
   }
 
   onSubmit(form: NgForm){

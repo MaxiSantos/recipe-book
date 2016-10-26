@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 
 import { RecipeService } from './recipes/recipe.service';
+import { ApiService } from './api.service';
 
 @Component({
   selector: 'rb-header',
-  templateUrl: './header.component.html'
+  templateUrl: './header.component.html',
+  providers: [ ApiService ]
 })
 export class HeaderComponent {
 

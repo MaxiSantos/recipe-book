@@ -2,15 +2,12 @@ import { Injectable } from '@angular/core';
 
 import { FavouriteRecipe } from '../recipes/recipe';
 import { RecipeService } from '../recipes/recipe.service';
-import { ApiService } from '.././api.service';
 
 @Injectable()
 export class FavouriteRecipeService {
   public recipes: FavouriteRecipe[];
 
-  constructor(
-    public api: ApiService
-  ) { }
+  constructor() { }
 
   // TODO, always calculating highest values
   // it sohuld initialize the array in a reparate method.
