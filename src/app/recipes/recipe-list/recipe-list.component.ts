@@ -1,4 +1,4 @@
-import { OnInit, Component, OnDestroy } from '@angular/core';
+import { Input, OnInit, Component, OnDestroy } from '@angular/core';
 import { Recipe } from '../recipe';
 import { RecipeService } from '../recipe.service'
 
@@ -22,6 +22,13 @@ export class RecipeListComponent implements OnInit, OnDestroy{
         this.recipes = recipes;
       }
     );
+
+    setInterval(
+      () => {
+        //console.log("something here")
+        //this.recipes[0].name+=" + ";
+      }, 2000
+    )
     //this.recipeService.fetchData()
   }
 

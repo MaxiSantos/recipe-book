@@ -21,7 +21,7 @@ export class RandomRecipeComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.rs.getRecipes2().subscribe((recipes: Recipe[]) => {
+    this.rs.getRecipes().subscribe((recipes: Recipe[]) => {
       var min = 0,
         max = recipes.length - 1,
         random = Math.floor(Math.random() * (max - min + 1)) + min;

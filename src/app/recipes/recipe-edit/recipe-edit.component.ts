@@ -26,6 +26,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   recipeForm: FormGroup; // we need to create the recipeForm so later we bind it to the html form
   private recipeIndex: number;
   private recipe: Recipe; // this is the recipe we are working on
+  private subscriptionRoute: Subscription;
   private subscription: Subscription;
   private recipesChanges: Subscription;
   private recipesChangesForm: Subscription;
@@ -44,26 +45,20 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   // all thins that goes beyond basic initialization goes on ngInit
   ngOnInit() {
-    this.subscription = this.route.params.subscribe(
+    this.subscriptionRoute = this.route.params.subscribe(
       (params: any) => {
         this.isNew = !params.hasOwnProperty('id');
         if(this.isNew) {
           this.recipe = null;
         } else {
           this.recipeIndex = +params['id'] //adding + to cast it to number
-
-          if(!!this.recipeService.getRecipes()) {
-            this.recipe = this.recipeService.getRecipe(this.recipeIndex);
-            this.initForm();
-          } else {
-            this.recipesChangesForm = this.recipeService.recipesChanges.subscribe(
-              (data: Recipe[]) => {
-                this.recipe = this.recipeService.getRecipe(this.recipeIndex);
-                this.initForm();
-                this.recipesChangesForm.unsubscribe();
-              }
-            )
-          }
+          this.subscription = this.recipeService.getRecipes().subscribe(
+            (data: Recipe[]) => {
+              this.recipe = this.recipeService.getRecipe(this.recipeIndex);
+              this.initForm();
+              this.subscription.unsubscribe();
+            }
+          );
         }
       }
     );
@@ -71,7 +66,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    this.subscription.unsubscribe();
+    this.subscriptionRoute.unsubscribe();
     if(!!this.recipesChanges) {
       this.recipesChanges.unsubscribe();
     }
@@ -129,11 +124,11 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     } else {
       this.recipeService.editRecipe(this.recipe, newRecipe);
     }
+
+    // TODO, check if this emmiter is needed or has to be handled by the api.service
     this.recipesChanges = this.recipeService.recipesChanges.subscribe((data:any) => {
       this.navigateBack();
     });
-
-    //this.navigateBack();
   }
 
   onUnitChange(index){

@@ -13,6 +13,7 @@ import { Recipe } from '../recipe'
 export class RecipeDetailComponent implements OnInit, OnDestroy {
   selectedRecipe: Recipe;
   private subscription : Subscription;
+  private subscriptionOnInit : Subscription;
   private recipeIndex: number;
 
   constructor(
@@ -22,27 +23,26 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     private router : Router) { }
 
   ngOnInit() {
-    this.subscription = this.route.params.subscribe(
+    this.subscriptionOnInit = this.route.params.subscribe(
       (params: any) => {
         this.recipeIndex = params['id'];
-        //this.selectedRecipe = this.recipeService.getRecipe(this.recipeIndex);
-        let recipeFromMemory = this.recipeService.getRecipes();
-        if(!!recipeFromMemory) {
-          this.selectedRecipe = this.recipeService.getRecipe(this.recipeIndex);
-        } else {
-          this.recipeService.recipesChanges.subscribe(
-            (params: Recipe[]) => {
-              this.selectedRecipe = this.recipeService.getRecipe(this.recipeIndex);
-              this.recipeService.recipesChanges.unsubscribe();
-            }
-          )
-        }
+
+        // this should be a getRecipe
+        // getRecipe(): should handle if a getAllItems is needed or not
+        // TODO, we should work on the getRecipe/getItem service on the
+        // ApiService when we have a RESTful api to work with
+        this.subscription = this.recipeService.getRecipes().subscribe(
+          (params: Recipe[]) => {
+            this.selectedRecipe = this.recipeService.getRecipe(this.recipeIndex);
+            this.subscription.unsubscribe();
+          }
+        );
       }
     )
   }
 
   ngOnDestroy(){
-    this.subscription.unsubscribe();
+    this.subscriptionOnInit.unsubscribe();
   }
 
   onAddToShoppingList(){
