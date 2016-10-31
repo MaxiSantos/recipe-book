@@ -23,6 +23,7 @@ export class ApiService {
     private http: Http
   ) { }
 
+  // TODO, check if it's ok to send service instance here or not
   //getData(url, service, dataKey, map?) {
   getData(config: IApiConfig) {
     console.log(this.cont++ + " url: "+config.url);
@@ -35,7 +36,7 @@ export class ApiService {
       return config.service.observable;
     } else {
       // create the request, store the `Observable` for subsequent subscribers
-      config.service.observable = this._fetchData(config.url, config.service, config.sourceKey);
+      config.service.observable = this._fetchData(config);
       return config.service.observable;
     }
   }
@@ -48,17 +49,19 @@ export class ApiService {
         if (response.status == 400) {
           // return "FAILURE"
         } else {
-          config.service[sourceKey] = response.json();
-          config.service['eventName'].emit(config.service[sourceKey]);
+          config.service[config.sourceKey] = response.json();
+
+          //config.service['eventName'].emit(config.service[config.sourceKey]);
+
 
           // TODO, check this method should be called when this method fire an event
           if(config.map) {
-            config.map(service[sourceKey])
+            //config.map(service[config.sourceKey])
           }
 
-          return service[sourceKey];
+          return config.service[config.sourceKey];
         }
-      })
+      });
       .share();
   }
 
