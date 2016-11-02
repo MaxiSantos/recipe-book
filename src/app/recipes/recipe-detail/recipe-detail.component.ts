@@ -26,15 +26,17 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     this.subscriptionOnInit = this.route.params.subscribe(
       (params: any) => {
         this.recipeIndex = params['id'];
-
+        console.log(`this.subscriptionOnInit on ${this.constructor.name}`);
         // this should be a getRecipe
         // getRecipe(): should handle if a getAllItems is needed or not
         // TODO, we should work on the getRecipe/getItem service on the
         // ApiService when we have a RESTful api to work with
         this.subscription = this.recipeService.getRecipes().subscribe(
           (params: Recipe[]) => {
+            console.log(`this.subscription on ${this.constructor.name}`);
             this.selectedRecipe = this.recipeService.getRecipe(this.recipeIndex);
-            this.subscription.unsubscribe();
+            //this.subscription.unsubscribe();
+            //_this.subscription.unsubscribe();
           }
         );
       }

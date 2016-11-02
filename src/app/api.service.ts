@@ -26,7 +26,9 @@ export class ApiService {
   // TODO, check if it's ok to send service instance here or not
   //getData(url, service, dataKey, map?) {
   getData(config: IApiConfig) {
-    console.log(this.cont++ + " url: "+config.url);
+    //console.log(this.cont++ + " url: "+config.url);
+    console.log(`this.constructor.name: ${config.service.constructor.name} - config.url: ${config.url}`)
+
     if(!!config.service[config.sourceKey] && !config.forceCall) {
       // if `data` is available just return it as `Observable`
       return Observable.of(config.service[config.sourceKey]);
@@ -61,7 +63,7 @@ export class ApiService {
 
           return config.service[config.sourceKey];
         }
-      });
+      })
       .share();
   }
 

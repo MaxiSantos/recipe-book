@@ -18,6 +18,7 @@ export class CheefComponent implements OnInit {
   ngOnInit() {
     this.cs.getCheef().subscribe(
       (cheef: Cheef) => {
+        console.log(`this.cs.getCheef() on ${this.constructor.name}`);
         this.cheef = cheef;
       }
     );

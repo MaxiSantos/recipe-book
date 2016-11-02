@@ -56,7 +56,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
             (data: Recipe[]) => {
               this.recipe = this.recipeService.getRecipe(this.recipeIndex);
               this.initForm();
-              this.subscription.unsubscribe();
+              //this.subscription.unsubscribe();
             }
           );
         }
