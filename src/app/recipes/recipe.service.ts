@@ -24,6 +24,9 @@ export class RecipeService implements IApiService{
   private recipesChangesSource = new Subject<Recipe>();
   recipesChanges$ = this.recipesChangesSource.asObservable();
 
+  private recipeChangeSource = new Subject<Recipe>();
+  recipeChange$ = this.recipeChangeSource.asObservable();
+
 
   constructor(
     private http: Http,
@@ -59,6 +62,10 @@ export class RecipeService implements IApiService{
     this.recipesChangesSource.next(recipe);
   }
 
+  announceChange(recipe: Recipe){
+    this.recipesChangesSource.next(recipe);
+  }
+
   getRecipe(id: number){
     return this.recipes[id];
   }
@@ -72,6 +79,7 @@ export class RecipeService implements IApiService{
     this.storeData().subscribe(
       (data:any) => {
         this.recipesChanges.emit(this.recipes);
+        this.announceChanges(newRecipe);
       });
   }
 
