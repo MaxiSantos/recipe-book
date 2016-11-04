@@ -1,4 +1,4 @@
-import { Input, Component, OnInit } from '@angular/core';
+import { OnChanges, Input, Component, OnInit } from '@angular/core';
 import { Recipe } from '../recipes';
 import { RecipeService } from '../recipes';
 
@@ -11,7 +11,7 @@ import { RecipeService } from '../recipes';
     }
   `]
 })
-export class FavouriteItemComponent implements OnInit {
+export class FavouriteItemComponent implements OnInit, OnChanges {
   @Input() item: Recipe;
   @Input() itemIndex: number;
 
@@ -34,4 +34,9 @@ export class FavouriteItemComponent implements OnInit {
   onSave() {
     this.rs.editRecipe(this.item, this.item);
   }
+
+  ngOnChanges(){
+    console.log("on favourite item changes");
+  }
+
 }

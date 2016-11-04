@@ -27,7 +27,7 @@ export class ApiService {
   //getData(url, service, dataKey, map?) {
   getData(config: IApiConfig) {
     //console.log(this.cont++ + " url: "+config.url);
-    console.log(`this.constructor.name: ${config.service.constructor.name} - config.url: ${config.url}`)
+    //console.log(`this.constructor.name: ${config.service.constructor.name} - config.url: ${config.url}`)
 
     if(!!config.service[config.sourceKey] && !config.forceCall) {
       // if `data` is available just return it as `Observable`
@@ -46,7 +46,7 @@ export class ApiService {
   _fetchData(config: IApiConfig) {
     return this.http.get(config.url)
       .map(response => {
-        console.log('mapping response from _fetchdata with dataKey: '+config.sourceKey)
+        //console.log('mapping response from _fetchdata with dataKey: '+config.sourceKey)
         config.service.observable = null;
         if (response.status == 400) {
           // return "FAILURE"
