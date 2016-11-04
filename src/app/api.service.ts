@@ -46,16 +46,14 @@ export class ApiService {
   _fetchData(config: IApiConfig) {
     return this.http.get(config.url)
       .map(response => {
-        //console.log('mapping response from _fetchdata with dataKey: '+config.sourceKey)
         config.service.observable = null;
-        if (response.status == 400) {
+        //if (response.status == 400) {
+        if (false) {
           // return "FAILURE"
         } else {
           config.service[config.sourceKey] = response.json();
 
-          //config.service['eventName'].emit(config.service[config.sourceKey]);
-
-
+          // config.service['eventName'].emit(config.service[config.sourceKey]);
           // TODO, check this method should be called when this method fire an event
           if(config.map) {
             //config.map(service[config.sourceKey])

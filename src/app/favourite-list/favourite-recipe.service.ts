@@ -23,16 +23,6 @@ export class FavouriteRecipeService {
     return this.recipes;
   }
 
-  public mapRecipesDEPRECATED(recipes) {
-    var highestRatedIndex = this.getHighestRatedIndex(recipes, 2);
-    this.recipes = [];
-    for (var i = 0; i < highestRatedIndex.length; i++) {
-      this.recipes.push(recipes[highestRatedIndex[i]]);
-      this.recipes[this.recipes.length-1].position = highestRatedIndex[i];
-    }
-    return this.recipes;
-  }
-
   // this should go into a utility class/service
   private getHighestRatedIndex(inp, count) {
     var outp = [];

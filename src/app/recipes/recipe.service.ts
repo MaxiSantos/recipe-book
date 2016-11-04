@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Injectable, Inject, EventEmitter } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+
 import 'rxjs/Rx';
 
 import { Recipe } from './recipe';
@@ -18,6 +20,10 @@ export class RecipeService implements IApiService{
 
   private recipes : Recipe[];
   observable: Observable<any>;
+
+  private recipesChangesSource = new Subject<Recipe>();
+  recipesChanges$ = this.recipesChangesSource.asObservable();
+
 
   constructor(
     private http: Http,
@@ -49,6 +55,10 @@ export class RecipeService implements IApiService{
     //this._cdRef.markForCheck();
   }
 
+  announceChanges(recipe: Recipe){
+    this.recipesChangesSource.next(recipe);
+  }
+
   getRecipe(id: number){
     return this.recipes[id];
   }
@@ -70,6 +80,7 @@ export class RecipeService implements IApiService{
     this.storeData().subscribe(
       (data:any) => {
         this.recipesChanges.emit(this.recipes);
+        this.announceChanges(newRecipe);
       });
   }
 
