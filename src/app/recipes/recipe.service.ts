@@ -33,6 +33,7 @@ export class RecipeService implements IApiService{
   // -- start using new getRecipe
   // -- refator in all places
   // -- check if singleton is not screwing things up
+
   getRecipes(force?): Observable<Recipe[]> {
     let url = 'https://recipe-book-817c6.firebaseio.com/recipes.json';
     //let config = new IApiConfig(url, this, 'recipes', 1);
@@ -41,7 +42,7 @@ export class RecipeService implements IApiService{
       service: this,
       sourceKey: 'recipes'
     };
-    if(force) {
+    if (force) {
       config['forceCall'] = force;
     }
     return this.api.getData(config);

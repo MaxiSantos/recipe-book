@@ -24,9 +24,10 @@ export class RandomRecipeComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.rms.getRandom().subscribe(
       (recipe: Recipe) => {
-        var min = 0,
-          max = recipes.length - 1,
-          random = Math.floor(Math.random() * (max - min + 1)) + min;
+        // var min = 0,
+        //   max = recipes.length - 1,
+        //   random = Math.floor(Math.random() * (max - min + 1)) + min;
+
         // if we make dandomRecipe to be a reference then when we change a value in
         // local memory that change will be reflected on the view. And that change should
         // be reflected on view only when it save it to the backend and backend returns a 200
@@ -45,7 +46,7 @@ export class RandomRecipeComponent implements OnInit, OnChanges {
         // this just work
         //this.randomRecipe = <Recipe> JSON.parse(JSON.stringify(recipes[random]));
 
-        this.recipe = recipe;
+        this.randomRecipe = recipe;
       })
 
     // setInterval(() => {
